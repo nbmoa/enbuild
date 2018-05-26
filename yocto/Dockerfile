@@ -32,6 +32,20 @@ ENV LANG=en_US.UTF-8
 
 ## Needed by bitbake
 RUN apt-get install -yq bzip2 chrpath cpio cpp diffstat g++ gawk gcc git make patch python wget
+RUN apt-get install -yq texinfo
+
+## Needed by resin
+RUN apt-get install -yq apt-transport-https ca-certificates gnupg2 software-properties-common && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
+    apt-key fingerprint 0EBFCD88 && \
+    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian \
+                        $(lsb_release -cs) \
+                        stable" && \
+    apt-get update && apt-get install -yq docker-ce
+
+## Needed by resin
+RUN apt-get install -yq iptables
+
 
 # Install go
 #RUN wget -qO- https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz | tar -xz -C /usr/local
